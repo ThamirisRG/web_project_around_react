@@ -1,7 +1,8 @@
-export default function Footer() {
+function Footer() {
   return (
-    <footer className="footer page__section">
-      <p className="footer__text">© 2024 Around The U.S.</p>
+    <footer className="footer">
+      <p>© 2024 Around The U..S.</p>
     </footer>
   );
 }
+export default Footer;
