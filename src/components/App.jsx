@@ -4,7 +4,7 @@
 import { useState,  } from "react"; // Hooks do React
 import { Routes, Route, } from "react-router-dom"; // Roteamento
 import Header from "../components/Header/Header.jsx"; // Componente do cabeçalho
-import Main from "../../src/components/Main/Main.jsx"; // Componente principal
+import Main from "../main.jsx"; // Componente principal
 import Footer from "../components/Footer/Footer.jsx"; // Componente do rodapé
 
 
@@ -58,6 +58,7 @@ function App() {
                   </>
                 }
                 loggedIn={loggedIn}
+
           />
           {/* Rota para a página de login */}
           <Route

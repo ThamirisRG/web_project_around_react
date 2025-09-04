@@ -1,3 +1,4 @@
+
 import Trash from "../../../../../assets/Trash (1).png";
 import ImagePopup from "../../Popup/components/ImagePopup/ImagePopup";
 export default function Card(props) {
