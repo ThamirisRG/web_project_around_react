@@ -197,7 +197,7 @@ import InfoTooltip from "./infoTootip/InfoTooltip.jsx"; // Componente de mensage
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx"; // Rota protegida
 import api from "../utils/api.js"; // Funções para chamadas à API
 import auth from "../utils/auth.js"; // Funções de autenticação
-import { CurrentUserContext } from "../contexts/currentUserContext.js"; // Contexto do usuário atual
+import CurrentUserContext from "../contexts/CurrentUserContext.js"; // Contexto do usuário atual
 
 function App() {
   // Estados (variáveis que controlam o comportamento do componente)

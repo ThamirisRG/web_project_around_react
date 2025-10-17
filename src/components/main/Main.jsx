@@ -7,7 +7,7 @@ import Popup from "./components/Popup/Popup.jsx";
 import Card from "./components/Card/Card/Card.jsx";
 import EditAvatar from "./components/Popup/components/EditeAvatar/EditAvatar.jsx";
 import EditProfile from "./components/Popup/components/EditeProfile/EditProfile.jsx";
-import { CurrentUserContext } from "../../contexts/currentUserContext.js";
+import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 
 const newCardPopup = { title: "Novo cartão", children: <NewCard /> };
 const editAvatarPopup = {
