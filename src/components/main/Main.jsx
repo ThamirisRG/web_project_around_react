@@ -7,19 +7,10 @@ import Popup from "./components/Popup/Popup.jsx";
 import Card from "./components/Card/Card/Card.jsx";
 import EditAvatar from "./components/Popup/components/EditeAvatar/EditAvatar.jsx";
 import EditProfile from "./components/Popup/components/EditeProfile/EditProfile.jsx";
-import CurrentUserContext from "../../contexts/CurrentUserContext.js";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-const newCardPopup = { title: "Novo cartão", children: <NewCard /> };
-const editAvatarPopup = {
-  title: "Alterar a foto de perfil",
-  children: <EditAvatar />,
-};
-const editProfilePopup = {
-  title: "Editar Perfil",
-  children: <EditProfile />,
-};
 
-function Main({
+export default function Main({
   popup,
   cards,
   handleCardDelete,
@@ -28,6 +19,17 @@ function Main({
   handleOpenPopup,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
+
+  const newCardPopup = { title: "Novo cartão", children: <NewCard /> };
+  const editAvatarPopup = {
+  title: "Alterar a foto de perfil",
+  children: <EditAvatar />,
+};
+const editProfilePopup = {
+  title: "Editar Perfil",
+  children: <EditProfile />,
+};
+
   return (
     <main className="content">
       <section className="profile">
@@ -91,4 +93,3 @@ function Main({
     </main>
   );
 }
-export default Main;
