@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 
-import { CurrentUserContext } from "../../../../../contexts/CurrentUserContext.js";
+import CurrentUserContext from "../../../../../contexts/CurrentUserContext";
 
 export default function NewCard() {
   const { handleAddPlaceSubmit } = useContext(CurrentUserContext);

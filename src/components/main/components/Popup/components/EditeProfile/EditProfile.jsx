@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContext.js";
+import CurrentUserContext from "../../../../../../contexts/CurrentUserContext";
 
 export default function EditProfile() {
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext); // Obtém o objeto de usuário atual
