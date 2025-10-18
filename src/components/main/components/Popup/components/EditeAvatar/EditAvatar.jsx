@@ -1,9 +1,9 @@
-import {useState } from "react";
-
+import { useContext, useState } from "react";
+import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContext";
 
 export default function EditAvatar() {
-  
-  const [avatar, setAvatar] = useState();
+  const { currentUser, handleUpdateAvatar } = useContext(CurrentUserContext);
+  const [avatar, setAvatar] = useState(currentUser?.avatar);
 
   const handleAvatarChange = (event) => {
     setAvatar(event.target.value);
@@ -12,7 +12,7 @@ export default function EditAvatar() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-   
+    handleUpdateAvatar({ avatar });
   };
 
   return (

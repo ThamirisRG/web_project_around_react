@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
-
+import { CurrentUserContext } from "../../../../../contexts/CurrentUserContext.js";
 
 export default function NewCard() {
+  const { handleAddPlaceSubmit } = useContext(CurrentUserContext);
 
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
@@ -16,7 +17,7 @@ export default function NewCard() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // handleAddPlaceSubmit({ name: title, link: url });
+    handleAddPlaceSubmit({ name: title, link: url });
   };
 
   return (
