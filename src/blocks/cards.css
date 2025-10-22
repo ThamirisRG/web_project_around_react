@@ -50,7 +50,7 @@
 .cards__button-like {
   width: 21px;
   height: 19px;
-  background-image: url(../images/image__like.png);
+  background-image: url(../assets/image__like.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -59,7 +59,7 @@
   background-color: transparent;
 }
 .cards__button-like_is-active {
-  background-image: url(../images/image__like_color.png);
+  background-image: url(../assets/image__like_color.png);
 }
 .cards__delete {
   width: 18px;

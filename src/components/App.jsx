@@ -14,26 +14,47 @@ import CurrentUserContext from "../contexts/CurrentUserContext.js"; // Contexto 
 
 function App() {
   // Estados (variáveis que controlam o comportamento do componente)
-  const [currentUser, setCurrentUser] = useState({}); // Dados do usuário atual
+  const [currentUser, setCurrentUser] = useState(); // Dados do usuário atual
   const [loggedIn, setLoggedIn] = useState(false); // Verifica se o usuário está logado
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false); // Controla a exibição do popup de mensagem
   const [isSuccess, setIsSuccess] = useState(false); // Define se a mensagem é de sucesso ou erro
   const navigate = useNavigate(); // Hook para navegar entre rotas
 
   // Verifica se o usuário já está logado ao carregar a página
+ 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Pega o token do localStorage
-    if (token) {
-      auth
-        .checkToken(token) // Verifica se o token é válido
-        .then((res) => {
-          setLoggedIn(true); // Define o usuário como logado
-          setCurrentUser(res.data); // Atualiza os dados do usuário
-          navigate("/"); // Redireciona para a página inicial
-        })
-        .catch((err) => console.error(err)); // Trata erros
-    }
-  }, [navigate]);
+  const token = localStorage.getItem("token");
+  console.log("🔑 Token encontrado:", token);
+
+  if (token) {
+    auth
+      .checkToken(token)
+      .then((res) => {
+        console.log("🛰️ Resposta do servidor (checkToken):", res);
+
+        // pega o user do retorno (alguns backends mandam dentro de data)
+        const user = res?.data || res?.user || res;
+
+        console.log("👤 Usuário carregado:", user?._id, user);
+        window.currentUser = user; // <-- agora você pode ver o user no console
+
+        setLoggedIn(true);
+        // setCurrentUser(user);
+        navigate("/");
+
+        api
+          .getUserInfo() // Faz a requisição para obter os dados do usuário
+          .then((userData) => {
+            setCurrentUser(userData); // Atualiza os dados do usuário
+          })
+          .catch((err) => console.error(err)); 
+      })
+      .catch((err) => console.error("❌ Erro no checkToken:", err));
+  } else {
+    console.log("⚠️ Nenhum token encontrado no localStorage");
+  }
+}, []);
+
 
   // Função para lidar com o login
   const handleLogin = (email, password) => {
@@ -53,20 +74,20 @@ function App() {
       }); // Trata erros
   };
 
-  // Função para lidar com o registro
-  const handleRegister = (email, password) => {
-    auth
-      .register(email, password) // Faz a requisição de registro
-      .then(() => {
-        setIsSuccess(true); // Define a mensagem como sucesso
-        setInfoTooltipOpen(true); // Abre o popup de mensagem
-        navigate("/login"); // Redireciona para a página de login
-      })
-      .catch(() => {
-        setIsSuccess(false); // Define a mensagem como erro
-        setInfoTooltipOpen(true); // Abre o popup de mensagem
-      });
-  };
+  // // Função para lidar com o registro
+  // const handleRegister = (email, password) => {
+  //   auth
+  //     .register(email, password) // Faz a requisição de registro
+  //     .then(() => {
+  //       setIsSuccess(true); // Define a mensagem como sucesso
+  // //       setInfoTooltipOpen(true); // Abre o popup de mensagem
+  //       navigate("/login"); // Redireciona para a página de login
+  //     })
+  //     .catch(() => {
+  //       setIsSuccess(false); // Define a mensagem como erro
+  //       setInfoTooltipOpen(true); // Abre o popup de mensagem
+  //     });
+  // };
 
   // Função para lidar com o logout
   const handleLogout = () => {
@@ -75,21 +96,10 @@ function App() {
     navigate("/login"); // Redireciona para a página de login
   };
 
-  // Busca as informações do usuário ao carregar a página
-  useEffect(() => {
-    api
-      .getUserInfo() // Faz a requisição para obter os dados do usuário
-      .then((userData) => {
-        setCurrentUser(userData); // Atualiza os dados do usuário
-      })
-      .catch((err) => console.error(err)); // Trata erros
-  }, []);
-
   // Função para atualizar os dados do usuário
   const handleUpdateUser = (data) => {
     (async () => {
-      await api.editProfile(data).then((newData) => {
-        console.log(newData); // Exibe os novos dados no console
+      await api.editProfile(data).then((newData) => {// Exibe os novos dados no console
         setCurrentUser(newData); // Atualiza os dados do usuário
         handleClosePopup(); // Fecha o popup
       });
@@ -222,7 +232,7 @@ function App() {
             element={
               <>
                 <Header text="Entrar" />
-                <Register onRegister={handleRegister} />
+                {/* <Register onRegister={handleRegister} /> */}
               </>
             }
           />

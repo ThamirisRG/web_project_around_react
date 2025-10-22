@@ -6,34 +6,37 @@ class Auth {
     this._baseUrl = baseUrl;
   }
 
-  register(email, password) {
-    return fetch(`${this._baseUrl}/signup`, {
+  async register(email, password) {
+    const res = await fetch(`${this._baseUrl}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
-    }).then(this._checkResponse);
+    });
+    return this._checkResponse(res);
   }
 
-  login(email, password) {
-    return fetch(`${this._baseUrl}/signin`, {
+  async login(email, password) {
+    const res = await fetch(`${this._baseUrl}/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
-    }).then(this._checkResponse);
+    });
+    return this._checkResponse(res);
   }
 
-  checkToken(token) {
-    return fetch(`${this._baseUrl}/users/me`, {
+  async checkToken(token) {
+    const res = await fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then(this._checkResponse);
+    });
+    return this._checkResponse(res);
   }
 
   _checkResponse(res) {

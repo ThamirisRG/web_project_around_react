@@ -1,24 +1,22 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import CurrentUserContext from "../../../../../../contexts/CurrentUserContext";
 
 export default function EditProfile() {
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext); // Obtém o objeto de usuário atual
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
 
-  const [name, setName] = useState(currentUser?.name); // Adicione variável de estado para nome
-  const [description, setDescription] = useState(currentUser?.about); // Adicione variável de estado para descrição
+  // 1) Começa controlado
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-  const handleNameChange = (event) => {
-    setName(event.target.value); // Atualiza o nome (name) quando a entrada for alterada
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value); // Atualiza a descrição (description) quando a entrada for alterada
-  };
+  // 2) Sincroniza quando currentUser chegar/alterar
+  useEffect(() => {
+    setName(currentUser?.name ?? "");
+    setDescription(currentUser?.about ?? "");
+  }, [currentUser]);
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Impede o comportamento padrão de envio do formulário
-
-    handleUpdateUser({ name, about: description }); // Atualiza as informações do usuário
+    event.preventDefault();
+    handleUpdateUser({ name: name.trim(), about: description.trim() });
   };
 
   return (
@@ -34,11 +32,12 @@ export default function EditProfile() {
             minLength="2"
             maxLength="40"
             required
-            onChange={handleNameChange}
             value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <p className="error-message"></p>
         </div>
+
         <div className="form__display">
           <input
             type="text"
@@ -49,11 +48,12 @@ export default function EditProfile() {
             minLength="2"
             maxLength="200"
             required
-            onChange={handleDescriptionChange}
             value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <p className="error-message"></p>
         </div>
+
         <button id="button-save" className="form__button" type="submit">
           Salvar
         </button>

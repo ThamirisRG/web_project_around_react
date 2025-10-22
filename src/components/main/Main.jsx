@@ -28,7 +28,7 @@ function Main({
   handleOpenPopup,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
-
+  console.log(currentUser)
   return (
     <main className="content">
       <section className="profile">
